@@ -69,7 +69,7 @@ int main(int argc, char const* argv[])
         try {
             left = std::stoi(argv[i++]);
             right = std::stoi(argv[i]);
-        } catch (...) {
+        } catch (std::invalid_argument &ex) {
             return -1;
         }
         if (left < MIN || right > MAX || left < 0 || right < 0) {
