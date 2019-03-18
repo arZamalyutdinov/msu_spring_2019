@@ -88,4 +88,5 @@ int main(int argc, char const* argv[])
         ss << primesCount(Data, primes, leftIdx, rightIdx) << std::endl;
     }
     std::cout << ss.str();
+    return 0;
 }
