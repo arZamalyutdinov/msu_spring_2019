@@ -28,7 +28,7 @@ std::vector<bool> sieve(const int min = MIN, const int max = MAX)
 }
 
 //binary search
-int findIndex(const int *arr, const int number, int right, std::function<bool (int, int)> func) 
+int findIndex(const int *arr, const int number, int right, const std::function<bool (int, int)> &func) 
 {
     int left = -1;
     while (left < right - 1) {
@@ -45,7 +45,7 @@ int findIndex(const int *arr, const int number, int right, std::function<bool (i
     return right;
 }
 
-int primesCount(const int* data, const std::vector<bool> &primes, const int leftIdx, const int rightIdx) 
+int primesCount(const int *data, const std::vector<bool> &primes, const int leftIdx, const int rightIdx) 
 {
     int count = 0;
     for (int i = leftIdx; i < rightIdx; ++i) {
@@ -62,7 +62,6 @@ int main(int argc, char const* argv[])
         return -1;
     }
     auto primes = sieve();
-    std::stringstream ss;
     for (int i = 1; i < argc; ++i) {
         int left;
         int right;
@@ -82,11 +81,10 @@ int main(int argc, char const* argv[])
                                                         return x <= y;
                                                     });
         if (leftIdx < 0 || rightIdx < 0 || left > right) {
-            ss << 0 << std::endl;
+            std::cout << 0 << std::endl;
             continue;
         }
-        ss << primesCount(Data, primes, leftIdx, rightIdx) << std::endl;
+        std::cout << primesCount(Data, primes, leftIdx, rightIdx) << std::endl;
     }
-    std::cout << ss.str();
     return 0;
 }
