@@ -2,7 +2,6 @@
 #include <iostream>
 #include <functional>
 #include <vector>
-#include <sstream>
 
 enum {
     MIN = 0,
