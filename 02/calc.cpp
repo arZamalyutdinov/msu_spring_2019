@@ -34,7 +34,7 @@ int64_t Calc::term(std::string::iterator &curr) {
         } else if (*curr == '/') {
             int64_t right = prim(++curr);
             if (right == 0) {
-                throw std::logic_error("Divizion by zero");
+                throw std::logic_error("Division by zero");
             }
             left /= right;
         } else {
