@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
     try {
         result = calc.compute();
     } catch (const std::logic_error &ex) {
-        std::cerr << "error" << std::endl;;
+        std::cerr << "error" << std::endl;
         return 1;
     }
     std::cout << result << std::endl;
