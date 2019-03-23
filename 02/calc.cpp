@@ -3,11 +3,11 @@
 #include <iostream>
 #include <stdexcept>
 
-Calc::Calc(const std::string &str) : expr (str) {
+Calc::Calc(const std::string &str) : expr(str) {
     expr.erase(std::remove(expr.begin(), expr.end(), ' '), expr.end());
 }
 
-int64_t Calc::compute () {
+int64_t Calc::compute() {
     auto curr = expr.begin();
     return expression(curr);
 }
