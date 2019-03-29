@@ -1,5 +1,4 @@
 #pragma once
-
 #include <ostream>
 #include <vector>
 
@@ -11,7 +10,6 @@ class Row {
         Row(size_t);
         int operator[](const ssize_t) const;
         int& operator[](const ssize_t);
-
 };
 
 class Matrix {

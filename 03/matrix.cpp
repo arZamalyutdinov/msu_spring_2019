@@ -1,5 +1,4 @@
 #include "matrix.h"
-#include <iostream>
 #include <stdexcept>
 
 // Row proxy-class
@@ -13,6 +12,7 @@ int Row::operator[](ssize_t i) const
     if (i < 0 || i >= vec.size()) {
         throw std::out_of_range("index is out range");
     }
+    
     return vec[i];
 }
 
@@ -21,6 +21,7 @@ int& Row::operator[](ssize_t i)
     if (i < 0 || i >= vec.size()) {
         throw std::out_of_range("index is out range");
     }
+
     return vec[i];
 }
 
@@ -48,6 +49,7 @@ const Row& Matrix::operator[](const ssize_t i) const
     if (i < 0 || i >= rowsVec.size()) {
         throw std::out_of_range("index is out range");
     }
+
     return rowsVec[i];
 }
 
@@ -56,6 +58,7 @@ Row& Matrix::operator[](const ssize_t i)
     if (i < 0 || i >= rowsVec.size()) {
         throw std::out_of_range("index is out range");
     }
+
     return rowsVec[i];
 };
 
@@ -66,6 +69,7 @@ Matrix& Matrix::operator*=(const int mult)
             row[i] *= mult;
         }
     }
+
     return *this;
 }
 
