@@ -13,4 +13,4 @@ matrix.o: matrix.cpp
 	$(CC) $(CFLAGS) matrix.cpp
 
 clean:
-	rm -rf *.o
+	rm -rf test.o matrix.o

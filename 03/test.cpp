@@ -48,7 +48,7 @@ int main()
     const Matrix& m4 = m1;
 
     Matrix m5(2, 3);
-
+    
     check(m1 == m1);
     check(m1 != m3);
     check(m1 == m4);

@@ -26,12 +26,9 @@ int& Row::operator[](ssize_t i)
 }
 
 // Matrix class
-Matrix::Matrix(size_t rows = 0, size_t columns = 0) : rows(rows), cols(columns)
+Matrix::Matrix(size_t rows = 0, size_t columns = 0) : rows(rows), cols(columns), rowsVec(std::vector<Row>(rows, columns))
 {
-    rowsVec = std::vector<Row>(rows);
-    for (auto &i : rowsVec) {
-        i = Row(columns);
-    }
+
 }
 
 size_t Matrix::getRows() const
