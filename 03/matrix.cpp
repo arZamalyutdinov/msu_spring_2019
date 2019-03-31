@@ -26,10 +26,7 @@ int& Row::operator[](ssize_t i)
 }
 
 // Matrix class
-Matrix::Matrix(size_t rows = 0, size_t columns = 0) : rows(rows), cols(columns), rowsVec(std::vector<Row>(rows, columns))
-{
-
-}
+Matrix::Matrix(size_t rows = 0, size_t columns = 0) : rows(rows), cols(columns), rowsVec(rows, columns){}
 
 size_t Matrix::getRows() const
 {
