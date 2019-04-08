@@ -80,7 +80,7 @@ Error Serializer::operator()(Args&&... args)
 template<typename T, typename... Args>
 Error Serializer::process(T &&value, Args&&... args)
 {
-    if (write(value) == Error::NoError && process(std::forward<Args>(args)...) == Error::NoError) {
+    if (write(std::forward<T>(value)) == Error::NoError && process(std::forward<Args>(args)...) == Error::NoError) {
         return Error::NoError;
     }
     return Error::CorruptedArchive;
@@ -134,7 +134,7 @@ Error Deserializer::operator()(Args&&... args)
 template<typename T, typename... Args>
 Error Deserializer::process(T &&value, Args&&... args)
 {
-    if (read(value) == Error::NoError && process(std::forward<Args>(args)...) == Error::NoError) {
+    if (read(std::forward<T>(value)) == Error::NoError && process(std::forward<Args>(args)...) == Error::NoError) {
         return Error::NoError;
     }
     return Error::CorruptedArchive;
@@ -159,7 +159,7 @@ Error Deserializer::read(uint64_t &value)
         return Error::CorruptedArchive;
     }
     try {
-        value = std::stoul(str);
+        value = std::stoull(str);
     } catch (const std::invalid_argument &ex) {
         return Error::CorruptedArchive;
     }
