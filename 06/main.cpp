@@ -11,7 +11,7 @@
 class FileSorter {
     public:
     FileSorter(const std::string &inputFile, const std::string &outputFile, const uint64_t memorySize,
-    const std::ios::openmode mode) : in(inputFile), out(outputFile), size(memorySize), numberOfFiles(0)
+    const std::ios::openmode mode, unsigned n_processes = 2) : in(inputFile), out(outputFile), size(memorySize), numberOfFiles(0), n_processes(n_processes)
     {
         // std::cout << "i am here" << std::endl;
     }
@@ -25,8 +25,11 @@ class FileSorter {
         // std::cout << "i am here" << std::endl;
         std::mutex mtx;
         std::ifstream in;
-        std::thread thr1(threadSort, std::ref(mtx), std::ref(in), size);
-        std::thread thr2(threadSort, std::ref(mtx), std::ref(in), size);
+        auto func = [this, &mtx, &in]() {
+            threadSort(mtx, in, this->size);
+        }; 
+        std::thread thr1(func);
+        std::thread thr2(func);
         std::string s1, s2;
         {
             std::stringstream ss;
@@ -61,12 +64,13 @@ class FileSorter {
 
     private:
     uint64_t size;
+    unsigned n_processes;
     std::string in;
     std::string out;
     std::atomic_int numberOfFiles;
     
     protected:
-    static void threadSort(std::mutex &mtx, std::ifstream &in, uint64_t size)
+    void threadSort(std::mutex &mtx, std::ifstream &in, uint64_t size)
     {
         std::thread::id thr_id = std::this_thread::get_id();
         std::stringstream ss;
@@ -76,7 +80,7 @@ class FileSorter {
             std::unique_lock<std::mutex> lock(mtx);
             std::vector<uint64_t> vec;
         // std::cout << "i am here" << std::endl;
-            for (uint64_t i = 0; i < size / 2; ++i) {
+            for (uint64_t i = 0; i < size / (n_processes + 1); ++i) {
                 uint64_t tmp;
                 in.read((char*)(&tmp), sizeof(tmp));
                 vec.push_back(tmp);
@@ -91,7 +95,7 @@ class FileSorter {
             std::sort(vec.begin(), vec.end());
             ss << thr_id << ++fileNum;
             std::ofstream ofile(ss.str(), std::ios::binary);
-            ofile.write((char*)vec.data(), vec.size() * sizeof(*(vec.data())));
+            ofile.write((char*)vec.data(), vec.size() * sizeof(decltype(vec)::value_type));
             std::this_thread::yield();
         }
         while (fileNum > 1) {
